@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>随机密码生成器</title>
+</head>
+
+<body>
+    <div id="content">
+        <input type="text" id="text_password" value="{{ password_code }}">
+        <input type="button" name="pwd_btn" id="pwd_btn_simple" value="生成简单密码">
+        <input type="button" name="pwd_btn" id="pwd_btn_complex" value="生成复杂密码">
+        <script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+        <script>
+            $('#pwd_btn_simple').click(function () {
+                $.ajax({
+                    url: 'get_simple_pwd',
+                    type: 'get',
+                    success: function (data) {
+                        console.log(data.password)
+                        $('#text_password').val(data.password)
+                    }
+                })
+            })
+            $('#pwd_btn_complex').click(function () {
+                $.ajax({
+                    url: 'get_complex_pwd',
+                    type: 'get',
+                    success: function (data) {
+                        console.log(data.password)
+                        $('#text_password').val(data.password)
+                    }
+                })
+            })
+        </script>
+    </div>
+</body>
+
+</html>

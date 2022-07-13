@@ -20,12 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-dzacq!xc5dwm65x4yv%j!bpnufnas#k+8i9*hbp(cjh&2$$(#1'
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-dzacq!xc5dwm65x4yv%j!bpnufnas#k+8i9*hbp(cjh&2$$(#1')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'generate_password',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +55,7 @@ ROOT_URLCONF = 'gen_random_pwd_dj3.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,12 +74,12 @@ WSGI_APPLICATION = 'gen_random_pwd_dj3.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
@@ -103,15 +104,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -119,7 +120,97 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# 这是老的方法
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# 这是新的方法
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 日志配置
+standard_format = '[%(asctime)s] - [%(levelname)s] - [%(threadName)s:%(thread)d] ' \
+                  '- [task_id:%(name)s] - [%(filename)s:%(lineno)d] - [%(funcName)s]: %(message)s'
+
+simple_format = '[%(asctime)s] - [%(levelname)s] - [%(filename)s:%(lineno)d] ' \
+                '- [%(funcName)s]: %(message)s'
+
+# BASE_LOG_DIR = os.path.join(BASE_DIR, 'logs')
+BASE_LOG_DIR = BASE_DIR / 'logs'
+
+
+# exist_ok = True 用于避免目录已经存在引发FileExistsError错误
+if not os.path.exists(BASE_LOG_DIR):
+    os.makedirs(BASE_LOG_DIR, exist_ok=True)
+
+# 默认日志文件名
+DEFAULT_LOG_FILENAME = os.path.join(BASE_LOG_DIR, 'default.log')
+ACCESS_LOG_FILENAME = os.path.join(BASE_LOG_DIR, 'access.log')
+TIMED_ACCESS_LOG_FILENAME = os.path.join(BASE_LOG_DIR, 'access_timed.log')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': standard_format,
+        },
+        'simple': {
+            'format': simple_format,
+        }
+    },
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+        'access_file': {  # 使用 RotatingFileHandler
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'standard',
+            'filename': ACCESS_LOG_FILENAME,
+            'maxBytes': 1024 * 1024 * 500,  # 日志大小为 单个文件 500MB
+            'backupCount': 10,
+            'encoding': 'utf-8',
+        },
+        'access_timed_file': {  # 使用 TimedRotatingFileHandler
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'formatter': 'standard',
+            'filename': TIMED_ACCESS_LOG_FILENAME,
+            'when': 'midnight',
+            'interval': 1,
+            'backupCount': 10,
+            'encoding': 'utf-8',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['access_file', 'console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'console_log': {
+            'handlers': ['console', ],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'access_log': {
+            # 'handlers': ['access_file', 'access_timed_file', 'console'],
+            'handlers': ['access_file', ],
+            'level': 'INFO',
+            'propagate': False,
+        },
+    }
+}

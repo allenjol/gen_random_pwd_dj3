@@ -1,0 +1,12 @@
+blog_uwsig.ini
+README.md
+.github/
+.git/
+.DS_Store
+logs/
+__pycache__/
+.idea/
+.history/
+src_v*.py
+random_code*.py
+venv/
