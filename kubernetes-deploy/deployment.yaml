@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gen-password-djangpo-pro-master
+  name: genpassword-djangpo-pro-master
   namespace: ayunw
   labels:
     appName: genpassword-django
@@ -26,8 +26,8 @@ spec:
       imagePullSecrets:
         - name: "registry-auth-ayunw"
       containers:
-        - name: gen-password-pro-django3
-          image: registry.cn-hangzhou.aliyuncs.com/ayunw/django-gen-pwd:v3.0
+        - name: genpassword-pro-django3
+          image: registry.cn-hangzhou.aliyuncs.com/ayunw/django-generate-passwd:v3.1
           imagePullPolicy: Always
           ports:
             - containerPort: 80
