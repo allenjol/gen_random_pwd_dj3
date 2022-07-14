@@ -11,3 +11,6 @@ src_v*.py
 random_code*.py
 venv/
 demo/
+kubernetes-deploy/
+docker-compose/
+.gitignore
