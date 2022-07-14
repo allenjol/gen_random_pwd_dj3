@@ -1,5 +1,5 @@
 FROM registry.cn-hangzhou.aliyuncs.com/ayunw/python-basic:23-fb3bd572
-LABEL author="allen_jol"
+LABEL author="Allen_Jol"
 
 ENV TZ=Asia/Shanghai \
     DEBIAN_FRONTEND=noninteractive
