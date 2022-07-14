@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  djangoGenPasswd:
+    restart: always
+    image: django-gen-pwd:v3.0
+    #command:
+    #- --loglevel warning
+    #volumes:
+    #- /data/django/data:/data/:Z
+    ports:
+    - "80:8080"
+    environment:
+    - DEBUG=True
+    - DJANGO_LOG_LEVEL=INFO
+    networks:
+      - django3
+
+
+networks:
+  django3:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.24.0.0/24
