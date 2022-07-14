@@ -23,4 +23,4 @@ COPY ./nginx/opssite.conf /etc/nginx
 
 EXPOSE 8080
 
-ENTRYPOINT ["/bin/bash", "/data/start/startApp.sh"]
+ENTRYPOINT ["/bin/bash", "/data/bin/startApp.sh"]
