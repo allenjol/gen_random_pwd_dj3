@@ -9,6 +9,11 @@ django 3.2 随机密码生成器
 docker build -t your-image:tag -f ./Dockerfile .
 ```
 
+### docker 命令行启动服务
+```shell
+docker run -itd --name django3-genPasswd -p youPort:8080 your-image:tag
+```
+
 ### docker-compose 启动服务
 ```shell
 sed -i 's@yourImageName@your-image:tag@' docker-compose/docker-compose.yml
