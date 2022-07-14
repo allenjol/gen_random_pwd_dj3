@@ -6,10 +6,10 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: "nginx"
 spec:
-  #tls:
-  #  - hosts:
-  #      - genpasswddj.ayunw.cn
-  #    secretName: genpasswddj-ayunw-tls
+  tls:
+    - hosts:
+        - genpasswddj.ayunw.cn
+      secretName: genpasswddj-ayunw-tls
   rules:
     - host: genpasswddj.ayunw.cn
       http:
