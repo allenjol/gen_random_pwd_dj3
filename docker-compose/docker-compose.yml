@@ -11,7 +11,8 @@ services:
     ports:
     - "80:8080"
     environment:
-    - DEBUG=True
+    - DJANGO_DEBUG=True
+    - DJANGO_SECRET_KEY="xxxxxxx"
     - DJANGO_LOG_LEVEL=INFO
     networks:
       - django3
