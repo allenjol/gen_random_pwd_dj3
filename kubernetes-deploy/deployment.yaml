@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gen-password-djangpo-pro-master
+  namespace: ayunw
+  labels:
+    appName: genpassword-django
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      appName: genpassword-django
+  minReadySeconds: 1
+  progressDeadlineSeconds: 60
+  revisionHistoryLimit: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        appName: genpassword-django
+    spec:
+      imagePullSecrets:
+        - name: "registry-auth-ayunw"
+      containers:
+        - name: gen-password-pro-django3
+          image: registry.cn-hangzhou.aliyuncs.com/ayunw/django-gen-pwd:v3.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "200Mi"
+              cpu: "200m"
+            limits:
+              memory: "500Mi"
+              cpu: "500m"

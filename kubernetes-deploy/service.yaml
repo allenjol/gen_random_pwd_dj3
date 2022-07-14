@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gen-password-service-dj
+  namespace: ayunw
+  labels:
+    appName: genpassword-django
+spec:
+  selector:
+    appName: genpassword-django
+  ports:
+    - name: tcp-80
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+  #type: NodePort
+  type: ClusterIP
+  #externalTrafficPolicy: Local

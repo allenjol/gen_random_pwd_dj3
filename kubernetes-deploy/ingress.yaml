@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gen-password-service-ingress-django
+  namespace: ayunw
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  #tls:
+  #  - hosts:
+  #      - genpasswddj.ayunw.cn
+  #    secretName: genpasswddj-ayunw-tls
+  rules:
+    - host: genpasswddj.ayunw.cn
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: gen-password-service-dj
+                port:
+                  number: 80

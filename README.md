@@ -20,3 +20,13 @@ sed -i 's@yourImageName@your-image:tag@' docker-compose/docker-compose.yml
 cd docker-compose
 docker-compose up -d
 ```
+
+### kubernetes 运行服务
+
+这里用ingress来演示
+
+```shell
+cd kubernetes-deploy
+# 更新你的镜像后执行以下命令
+kubectl apply -f .
+```
