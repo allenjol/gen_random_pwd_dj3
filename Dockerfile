@@ -8,7 +8,7 @@ WORKDIR /data
 
 COPY . /data
 
-RUN chmod +x /data/start/startApp.sh \
+RUN chmod +x /data/bin/startApp.sh \
     && mkdir -p /data/logs \
     && apt-get -y update \
     && apt-get -y upgrade \
