@@ -4,5 +4,5 @@
 # * Date  : 2022/07/12 12:45:05
 # *****************************
 
-uwsgi --ini /data/start/uwsgi.ini
+uwsgi --ini /data/bin/uwsgi.ini
 nginx -c /etc/nginx/opssite.conf -g 'daemon off;'

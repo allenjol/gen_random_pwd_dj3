@@ -142,7 +142,6 @@ simple_format = '[%(asctime)s] - [%(levelname)s] - [%(filename)s:%(lineno)d] ' \
 # BASE_LOG_DIR = os.path.join(BASE_DIR, 'logs')
 BASE_LOG_DIR = BASE_DIR / 'logs'
 
-
 # exist_ok = True 用于避免目录已经存在引发FileExistsError错误
 if not os.path.exists(BASE_LOG_DIR):
     os.makedirs(BASE_LOG_DIR, exist_ok=True)
@@ -164,6 +163,9 @@ LOGGING = {
         }
     },
     'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
         'require_debug_true': {
             '()': 'django.utils.log.RequireDebugTrue',
         },
@@ -173,7 +175,7 @@ LOGGING = {
             'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
             'filters': ['require_debug_true'],
             'class': 'logging.StreamHandler',
-            'formatter': 'simple',
+            'formatter': 'simple'
         },
         'access_file': {  # 使用 RotatingFileHandler
             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
@@ -182,17 +184,24 @@ LOGGING = {
             'filename': ACCESS_LOG_FILENAME,
             'maxBytes': 1024 * 1024 * 500,  # 日志大小为 单个文件 500MB
             'backupCount': 10,
-            'encoding': 'utf-8',
+            'encoding': 'utf-8'
         },
         'access_timed_file': {  # 使用 TimedRotatingFileHandler
             'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
             'class': 'logging.handlers.TimedRotatingFileHandler',
             'formatter': 'standard',
             'filename': TIMED_ACCESS_LOG_FILENAME,
-            'when': 'midnight',
+            # 'when': 'midnight',
+            'when': 'D',
             'interval': 1,
+            'delay': False,
             'backupCount': 10,
-            'encoding': 'utf-8',
+            'encoding': 'utf-8'
+        },
+        'mail_admins': {
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'class': 'django.utils.log.AdminEmailHandler',
+            'filters': ['require_debug_false']
         },
     },
     'loggers': {
