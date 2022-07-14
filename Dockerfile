@@ -5,6 +5,7 @@ ENV TZ=Asia/Shanghai \
     DEBIAN_FRONTEND=noninteractive
 
 WORKDIR /data
+
 COPY . /data
 
 RUN chmod +x /data/start/startApp.sh \
