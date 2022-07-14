@@ -3,7 +3,7 @@ version: '3.8'
 services:
   djangoGenPasswd:
     restart: always
-    image: django-gen-pwd:v3.0
+    image: yourImageName
     #command:
     #- --loglevel warning
     #volumes:
