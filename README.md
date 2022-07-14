@@ -30,3 +30,8 @@ cd kubernetes-deploy
 # 更新你的镜像后执行以下命令
 kubectl apply -f .
 ```
+
+### 值得参考的别人的项目
+```consle
+https://github.com/liangliangyy/DjangoBlog/blob/master/djangoblog/settings.py
+```
