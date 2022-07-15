@@ -208,7 +208,7 @@ LOGGING = {
         },
     },
     'loggers': {
-        '': {
+        '': {   # logger = logging.getLogger(__name__) 使用的就是这个默认logger
             'handlers': ['access_file', 'console'],
             'level': 'DEBUG',
             'propagate': False,
