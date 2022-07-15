@@ -30,7 +30,7 @@ spec:
           image: registry.cn-hangzhou.aliyuncs.com/ayunw/django-generate-passwd:v3.1
           imagePullPolicy: Always
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           resources:
             requests:
               memory: "200Mi"
