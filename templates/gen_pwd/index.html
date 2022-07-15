@@ -15,6 +15,7 @@
         <h4>随机密码生成器</h4>
         <div style="text-align:center;vertical-align:middle;">
             <input type="text" id="text_password" class="text_password" value="{{ password_code }}">
+            <input type="button" name="copy_btn" id="copy" value="复制密码">
         </div>
         <div class="container">
             <div class="button1">
@@ -46,5 +47,11 @@
                 }
             })
         })
+        $("#copy").click(function () {
+            var text = $("#text_password");
+            text.select();
+            document.execCommand("copy");
+            // alert("复制成功。")
+         });
     </script>
 </body>

@@ -133,11 +133,6 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 日志配置
-standard_format = '[%(asctime)s] - [%(levelname)s] - [%(threadName)s:%(thread)d] ' \
-                  '- [task_id:%(name)s] - [%(filename)s:%(lineno)d] - [%(funcName)s]: %(message)s'
-
-simple_format = '[%(asctime)s] - [%(levelname)s] - [%(filename)s:%(lineno)d] ' \
-                '- [%(funcName)s]: %(message)s'
 
 # BASE_LOG_DIR = os.path.join(BASE_DIR, 'logs')
 BASE_LOG_DIR = BASE_DIR / 'logs'
@@ -146,11 +141,19 @@ BASE_LOG_DIR = BASE_DIR / 'logs'
 if not os.path.exists(BASE_LOG_DIR):
     os.makedirs(BASE_LOG_DIR, exist_ok=True)
 
+# 定义两种日志格式
+standard_format = '[%(asctime)s] - [%(levelname)s] - [%(threadName)s:%(thread)d] ' \
+                  '- [task_id:%(name)s] - [%(filename)s:%(lineno)d] - [%(funcName)s]: %(message)s'
+
+simple_format = '[%(asctime)s] - [%(levelname)s] - [%(filename)s:%(lineno)d] ' \
+                '- [%(funcName)s]: %(message)s'
+
 # 默认日志文件名
 DEFAULT_LOG_FILENAME = os.path.join(BASE_LOG_DIR, 'default.log')
 ACCESS_LOG_FILENAME = os.path.join(BASE_LOG_DIR, 'access.log')
 TIMED_ACCESS_LOG_FILENAME = os.path.join(BASE_LOG_DIR, 'access_timed.log')
 
+# 日志字典配置
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -205,7 +208,7 @@ LOGGING = {
         },
     },
     'loggers': {
-        '': {
+        '': {   # logger = logging.getLogger(__name__) 使用的就是这个默认logger
             'handlers': ['access_file', 'console'],
             'level': 'DEBUG',
             'propagate': False,

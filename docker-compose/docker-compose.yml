@@ -6,13 +6,14 @@ services:
     image: yourImageName
     #command:
     #- --loglevel warning
-    #volumes:
-    #- /data/django/data:/data/:Z
+    volumes:
+    - /data/django/logs:/data/logs:Z
     ports:
-    - "80:8080"
+    - "9999:8080"
     environment:
+    - TZ="Asia/Shanghai"
     - DJANGO_DEBUG=True
-    - DJANGO_SECRET_KEY="xxxxxxx"
+    - DJANGO_SECRET_KEY="your custom secret key..."
     - DJANGO_LOG_LEVEL=INFO
     networks:
       - django3
