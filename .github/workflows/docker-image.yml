@@ -7,7 +7,6 @@ on:
 env:
   #TAG_NUMBER: ${{ steps.meta.outputs.tags }}-${{ github.run_number }}
   TAG_NUMBER: ${{ github.run_number }}-${{ github.run_id }}
-  IMAGE_NAME: echo ${:9}
   
 jobs:
   build:
@@ -32,14 +31,20 @@ jobs:
         repoName=${{ github.repository }}
         echo $repoName
         echo ${repoName:9}
-
       
     - name: Build the Docker image
       run: |
         env
+        repoName=${{ github.repository }}
+        imageName=${repoName:9}
+        
         docker login --username=${{ secrets.REGISTRY_USERNAME }} registry.cn-hangzhou.aliyuncs.com -p ${{ secrets.REGISTRY_PASSWORD }}
-        docker build . --file Dockerfile --tag registry.cn-hangzhou.aliyuncs.com/ayunw/gen_random_pwd_dj3:${{ env.TAG_NUMBER }}
-        docker push registry.cn-hangzhou.aliyuncs.com/ayunw/gen_random_pwd_dj3:${{ env.TAG_NUMBER }}
+        
+        #docker build . --file Dockerfile --tag registry.cn-hangzhou.aliyuncs.com/ayunw/gen_random_pwd_dj3:${{ env.TAG_NUMBER }}
+        #docker push registry.cn-hangzhou.aliyuncs.com/ayunw/gen_random_pwd_dj3:${{ env.TAG_NUMBER }}
+        
+        docker build . --file Dockerfile --tag registry.cn-hangzhou.aliyuncs.com/ayunw/$imageName:${{ env.TAG_NUMBER }}
+        docker push registry.cn-hangzhou.aliyuncs.com/ayunw/$imageName:${{ env.TAG_NUMBER }}
 
 
 
