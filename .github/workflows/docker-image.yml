@@ -1,0 +1,27 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+
+env:
+  #TAG_NUMBER: ${{ steps.meta.outputs.tags }}-${{ github.run_number }}
+  TAG_NUMBER: ${{ github.run_number }}-${{ github.run_id }}
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Output Run ID
+      run: echo ${{ github.run_id }}
+    - name: Output Run Number
+      run: echo ${{ github.run_number }}
+    - name: Output Run Attempt
+      run: echo ${{ github.run_attempt }}
+    - name: Build the Docker image
+      run: |
+        env
+        docker login --username=${{ secrets.REGISTRY_USERNAME }} registry.cn-hangzhou.aliyuncs.com -p ${{ secrets.REGISTRY_PASSWORD }}
+        docker build . --file Dockerfile --tag registry.cn-hangzhou.aliyuncs.com/ayunw/gen_random_pwd_dj3:${{ env.TAG_NUMBER }}
+        docker push registry.cn-hangzhou.aliyuncs.com/ayunw/gen_random_pwd_dj3:${{ env.TAG_NUMBER }}
