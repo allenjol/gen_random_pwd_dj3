@@ -1,9 +1,11 @@
 # gen_random_pwd_dj3
 ---
+django 3.2 随机密码生成器
+
 [![OSCS Status](https://www.oscs1024.com/platform/badge/allenjol/gen_random_passwd_dj.svg?size=small)](https://www.oscs1024.com/project/allenjol/gen_random_passwd_dj?ref=badge_small)
 [![CI](https://github.com/allenjol/gen_random_pwd_dj3/actions/workflows/docker-image.yml/badge.svg?branch=master)](https://github.com/allenjol/gen_random_pwd_dj3/actions/workflows/docker-image.yml)
 
-django 3.2 随机密码生成器
+
 
 ### 构建镜像
 ```shell
