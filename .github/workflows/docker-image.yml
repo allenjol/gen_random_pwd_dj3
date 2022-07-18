@@ -29,10 +29,10 @@ jobs:
       
     - name: Output custom env
       run: |
-        repo_name=${{ github.repository }}
-        echo ${{ env.repo_name }}
-        repo=echo ${repo_name}
-        echo $repo
+        repoName=${{ github.repository }}
+        echo $repoName
+        echo ${repoName:9}
+
       
     - name: Build the Docker image
       run: |
