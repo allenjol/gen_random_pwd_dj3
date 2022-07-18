@@ -7,6 +7,7 @@ on:
 env:
   #TAG_NUMBER: ${{ steps.meta.outputs.tags }}-${{ github.run_number }}
   TAG_NUMBER: ${{ github.run_number }}-${{ github.run_id }}
+  IMAGE_NAME: echo ${${{ github.repository }}:9}
   
 jobs:
   build:
@@ -25,6 +26,9 @@ jobs:
       
     - name: Output repository name
       run: echo ${{ github.repository }}
+      
+    - name: Output custom env
+      run: echo ${{ env.IMAGE_NAME }}
       
     - name: Build the Docker image
       run: |
