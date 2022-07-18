@@ -23,5 +23,5 @@ jobs:
       run: |
         env
         docker login --username=${{ secrets.REGISTRY_USERNAME }} registry.cn-hangzhou.aliyuncs.com -p ${{ secrets.REGISTRY_PASSWORD }}
-        docker build . --file Dockerfile --tag ${{ secrets.REGISTRY_URL }}/ayunw/${{ github.action_repository }}:${{ env.TAG_NUMBER }}
+        docker build . --file Dockerfile --tag registry.cn-hangzhou.aliyuncs.com/ayunw/${{ github.action_repository }}:${{ env.TAG_NUMBER }}
         docker push registry.cn-hangzhou.aliyuncs.com/ayunw/${{ github.action_repository }}:${{ env.TAG_NUMBER }}
